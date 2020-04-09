@@ -8,9 +8,6 @@ import (
 
 func SetupRouter()*gin.Engine{
 	r := gin.Default()
-	r.Static("/static","static")
-	r.LoadHTMLGlob("templates/*")
-	r.GET("/", controller.IndexHandler)
 	//api
 	v1Group := r.Group("v1")
 	{
