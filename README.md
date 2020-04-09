@@ -8,8 +8,8 @@
 3|data|object|实例或null|
 4|status|number|0失败，1成功|
 
-1.注册
-________
+## 1.注册
+
 - URL：/v1/api/register  
 
 - method:POST
@@ -42,8 +42,7 @@ ________
           
           "message": "密码不能少于6位"
          }
-2.登录
-________
+## 2.登录
 - URL:v1/api/login
 
 - method:POST
