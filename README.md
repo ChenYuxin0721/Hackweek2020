@@ -20,15 +20,12 @@
         "Content-Type": "application/json"
 
 - Request Body
-`
       {  
             "username": "aaa",  
     
             "password": "123456"    
       }
-`
-- Response Body
-` 
+- Response Body 
         {
            "code": 200,
            
@@ -36,8 +33,7 @@
            
            "message": "注册成功"
         }
-`
-`
+
         {
           "code": 422,
           
@@ -45,7 +41,6 @@
           
           "message": "密码不能少于6位"
          }
-`
 2.登录
 -  method:POST
 
@@ -54,15 +49,14 @@
         "Content-Type": "application/json"
 
 - Request Body
-`
-      {  
+
+        {  
             "username": "aaa",  
     
             "password": "123456"    
-      }
-`
+        }
 - Response Body
-`
+
         {
         "code": 200,
         "data": {
@@ -70,13 +64,15 @@
         },
         "message": "注册成功"
         }
-`
-`      
+
+     
        {
       "message": "密码错误",
       "status": 0
         }
+        
         或
+        
        {
         "code": 422,
         "message": "密码不能少于6位"
