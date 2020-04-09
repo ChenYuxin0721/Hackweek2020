@@ -80,7 +80,60 @@
         "code": 422,
         "message": "密码不能少于6位"
         }
-`     
+## 3.获取用户信息
+
+- URL：/v1/api/info 
+
+- method:GET
+
+- Request Headers
+
+        "Content-Type": "application/json"
+
+- Request Body
+
+      {  
+            "username": "aaa",  
+    
+            "password": "123456"    
+      }
+- Response Body
+        
+       {
+          "code": 200,
+          "data": {
+          "user": {
+            "name": "aaa"
+            }
+         }
+       }
+     
+        {
+         "message": "权限不足",
+         "status": 0
+        }
+
+## 4.发表故事
+
+- URL：/v1/api/post 
+
+- method:POST
+
+- Request Headers
+
+        "Content-Type": "application/json"
+
+- Request Body
+
+      {  
+            "story": "aaa",      
+      }
+- Response Body
+        
+    
+
+
+ 
         
         
         
