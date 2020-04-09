@@ -2,30 +2,30 @@
 ## Basic Response Body
 
 序号|参数|类型|规则|
-
+---- | ----- | -----|
 1|code|number|正常响应200|
-
 2|message|string|{...}|
-
 3|data|object|实例或null|
-
 4|status|number|0失败，1成功|
 
 1.注册
--URL：/v1/api/register
--  method:POST
+- URL：/v1/api/register  
+
+- method:POST
 
 - Request Headers
 
         "Content-Type": "application/json"
 
 - Request Body
+
       {  
             "username": "aaa",  
     
             "password": "123456"    
       }
-- Response Body 
+- Response Body
+
         {
            "code": 200,
            
