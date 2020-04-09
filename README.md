@@ -1,9 +1,14 @@
 # API文档
 ##Basic Response Body
+
 序号|参数|类型|规则|
+
 1|code|number|正常响应200|
+
 2|message|string|{...}|
+
 3|data|object|实例或null|
+
 4|status|number|0失败，1成功|
 
 1.注册
