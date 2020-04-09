@@ -1,14 +1,15 @@
 # API文档
 ## Basic Response Body
 
-序号|参数|类型|规则|
----- | ----- | -----|
+序号  |参数|类型|规则|
+---- | -----| -----|-----|
 1|code|number|正常响应200|
 2|message|string|{...}|
 3|data|object|实例或null|
 4|status|number|0失败，1成功|
 
 1.注册
+________
 - URL：/v1/api/register  
 
 - method:POST
@@ -42,7 +43,10 @@
           "message": "密码不能少于6位"
          }
 2.登录
--  method:POST
+________
+- URL:v1/api/login
+
+- method:POST
 
 - Request Headers
 
