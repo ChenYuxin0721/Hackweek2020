@@ -1,6 +1,6 @@
 package db
 
-import(
+import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/spf13/viper"
@@ -9,23 +9,8 @@ import(
 
 var DB *gorm.DB
 
-type User struct {
-	gorm.Model
-	name string `jason:"name"`
-	password string `jason:"password"`
-	following int64 `json:"'following's id"`
-	follower int64 `json:"'follower'id"`
-	like int64 `json:"like's number'"`
-	story_id uint64 `gorm:"association_foreignkey:Story;foreignkey:id"`
-	currency int64
-}
 
-type Story struct{
-	gorm.Model
-	story string `json:"story"`
-}
-
-
+/*
 func InitMySQL()(err error){
 	dsn :="root:root@tcp(127.0.0.1:13306)/db1?charset=utf8&mb4&parseTime=True&loc=local"
 	DB, err =gorm.Open("mysql",dsn)
@@ -34,6 +19,8 @@ func InitMySQL()(err error){
 	}
 	return DB.DB().Ping()
 }
+*/
+
 func InitDB()*gorm.DB  {
 	driverName:=viper.GetString("datasource.driverName")
 	host:=viper.GetString("datasource.host")

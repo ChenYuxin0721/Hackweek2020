@@ -37,7 +37,7 @@ func Register(c *gin.Context) {
 		Following: 0,
 		Follower:  0,
 		Like:      0,
-		Story:     "",
+		StoryId:   0,
 		Currency:  0,
 	}
 	DB.Create(&newUser)
@@ -106,16 +106,16 @@ func IndexHandler(c *gin.Context) {
 
 func CreateAStory(c *gin.Context) {
 	//得到请求
-	var story model.User
+	var story model.Story
 	c.BindJSON(&story)
 	//存入数据库
-	err:=model.CreateAStory(&story)
+	err:=util.CreateAStory(&story)
 	if err!= nil{
 		c.JSON(http.StatusOK, gin.H{
 			"error": err.Error()})
 	} else {
 		c.JSON(http.StatusOK, gin.H{
-			"status":  2000,
+			"code":  200,
 			"message": "success",
 			"data":    story,
 		})
@@ -124,7 +124,7 @@ func CreateAStory(c *gin.Context) {
 
 func ReadAllMyStory(c *gin.Context) {
 	//查询我的故事的所有数据
-	allstory, err:=model.ReadAllMyStory()
+	allstory, err:=util.ReadAllMyStory()
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"error": err.Error()})
@@ -143,9 +143,13 @@ func UpdateAStory(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"error": "invalid id"})
 		return
 	}
-	story, err := model.GETAStory(id)
+	story, err := util.GETAStory(id)
+	if err !=nil{
+		c.JSON(http.StatusOK,gin.H{"error":err.Error()})
+		return
+	}
 	c.BindJSON(&story)
-	if err = model.UpdateAStory(story); err != nil {
+	if err = util.UpdateAStory(story); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"error": "save failed",})
 	} else {
@@ -164,7 +168,7 @@ func DeleteAStory(c *gin.Context) {
 			"error": "invalid id"})
 		return
 	}
-	if err := model.DeleteAStory(id); err != nil {
+	if err := util.DeleteAStory(id); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"error": err.Error(),
 		})
@@ -175,3 +179,4 @@ func DeleteAStory(c *gin.Context) {
 		})
 	}
 }
+

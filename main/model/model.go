@@ -2,52 +2,37 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"hackweek/main/db"
 )
+
 
 type User struct {
 	gorm.Model
-	name string `jason:"name"`
-	password string `jason:"password"`
-	following int64 `json:"'following's id"`
-	follower int64 `json:"'follower'id"`
-	like int64 `json:"like"`
-	story_id uint64 `gorm:"association_foreignkey:Story;foreignkey:id"`
-	currency int64
+	Name      string `jason:"name"`
+	Password  string `jason:"password"`
+	Following int64  `json:"'following's id"`
+	Follower  int64  `json:"'follower'id"`
+	Avatars   Avatar `gorm:"foreignkey:AvaRefer"`
+	Like      int64  `json:"like"`
+	StoryId   uint64 `gorm:"association_foreignkey:Story"`
+	Currency  int64
 }
-
 
 type Story struct{
 	gorm.Model
-	story string `json:"story"`
+	Story string `json:"story"`
+	Image    []Img `gorm:"association_foreignkey:Img"`
 }
 
-//增删查改
-func CreateAStory() (story []*Story,err error) {
-	err = db.DB.Create(&story).Error
-	return
+type Img struct {
+	gorm.Model
+	Url string `json:"url"`
 }
 
-func ReadAllMyStory()(allstory []*Story,err error){
-	if err := db.DB.Find(&allstory).Error;err!=nil{
-		return  nil, err
-	}
-	return
+type Avatar struct {
+    gorm.Model
+	AvaRefer uint
+	Url  string
 }
 
-func GETAStory(id string)(story *Story,err error){
-	if err = db.DB.Where("id=?", id).First(story).Error; err != nil {
-		return nil,err
-	}
-	return
-}
 
-func UpdateAStory(story *Story)(err error){
-	err = db.DB.Save(story).Error
-	return
-}
 
-func DeleteAStory(id string)(err error){
-	err = db.DB.Where("ID=?",id).Delete(&User{}).Error
-	return
-}
