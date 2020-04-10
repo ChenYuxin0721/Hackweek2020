@@ -17,8 +17,9 @@ func RandomString(n int)string {
 	return string(result)
 }
 
-func CreateAStory(story *model.Story)(err error) {
-	err = db.DB.Create(&story).Error
+func CreateAStory(Name,Title,Tag,Text,Imagurl *model.Story)(err error) {
+	err = db.DB.Create(&model.Story{}).Error;
+
 	return
 }
 
@@ -40,6 +41,7 @@ func UpdateAStory(story *model.Story)(err error){
 	err = db.DB.Save(story).Error;
 	return
 }
+
 
 func DeleteAStory(id string)(err error){
 	err = db.DB.Where("id=?",id).Delete(&model.Story{}).Error
