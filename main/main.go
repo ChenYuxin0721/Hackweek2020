@@ -7,6 +7,7 @@ import (
 	_ "golang.org/x/crypto/ssh"
 	"hackweek/main/db"
 	"hackweek/main/router"
+	"net/http"
 	"os"
 )
 
@@ -15,6 +16,19 @@ func main() {
 	db:=db.InitDB()
 	defer db.Close()//关闭数据库
 	r:=gin.Default()
+	// 告诉gin框架模板文件引用的静态文件去哪里找
+
+	r.Static("/static", "static")
+
+	// 告诉gin框架去哪里找模板文件
+
+	r.LoadHTMLGlob("templates/*")
+
+	r.GET("/", func(c *gin.Context) {
+
+		c.HTML(http.StatusOK, "index.html", nil)
+
+	})
     r=router.SetupRouter()
     port:=viper.GetString("server.port")
     if port !=""{

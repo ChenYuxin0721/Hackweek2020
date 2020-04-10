@@ -18,15 +18,13 @@ func SetupRouter()*gin.Engine{
 		//存入信息
 		v1Group.GET("/api/info",middleware.Middleware(),controller.Info)
 		//发表故事
-		v1Group.POST("/api/create", controller.Create)
-		/*
+		v1Group.POST("/api/create", controller.CreateAStory)
 		//查看我的所有的故事
 		v1Group.GET("/api/readme", controller.ReadAllMyStory)
 		//修改我的某个故事
 		v1Group.PUT("/api/readme/:id", controller.UpdateAStory)
 		//删除我的某个故事
-		v1Group.DELETE("/api/readme/:id", controller.DeleteAStory)
-		*/
+		v1Group.DELETE("/api/readme", controller.DeleteAStory)
 	}
 	return r
 }
