@@ -129,6 +129,24 @@
             "story": "aaa",      
       }
 - Response Body
+
+      {
+        "code": 200,
+        "data": {
+        "imagurl": "ABC",
+        "name": "aaa",
+        "tag": "ABC",
+        "text": "ABC",
+        "title": "ABC"
+        }，
+        "message": "发表成功"
+        }
+        
+        
+        {
+        "code": "422",
+        "message": "内容不能为空"
+        }
         
     
 
