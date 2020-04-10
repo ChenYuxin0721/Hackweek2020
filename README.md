@@ -155,7 +155,7 @@
         
 ## 5.删除某个故事
 
-- URL：/v1/api/delete
+- URL：/v1/api/readme
 
 - method:POST
 
