@@ -115,7 +115,7 @@
 
 ## 4.发表故事
 
-- URL：/v1/api/post 
+- URL：/v1/api/create
 
 - method:POST
 
@@ -126,7 +126,12 @@
 - Request Body
 
       {  
-            "story": "aaa",      
+        "imagurl": "ABC",
+        "name": "aaa",
+        "tag": "ABC",
+        "text": "ABC",
+        "title": "ABC"
+            
       }
 - Response Body
 
@@ -147,6 +152,19 @@
         "code": "422",
         "message": "内容不能为空"
         }
+        
+## 5.查看我的故事
+
+- URL：/v1/api/create
+
+- method:POST
+
+- Request Headers
+
+        "Content-Type": "application/json"
+
+- Request Body
+
         
     
 
