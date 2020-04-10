@@ -1,23 +1,11 @@
-version: "3.7"
-
+version: '3'
 services:
-  mysql:
-    image: mysql:8
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-    ports:
-      - 3306:3306
-
-  adminer:
-    image: adminer:4
-    ports:
-      - 8080:8080
-
-  dbclient:
-    image: mysql:8
-    command: mysql -hmysql -uroot -p
-    # source /home/script/db.sql
-    # select * from tb_users \G;
+  app:
+    #    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./script:/home/script
+      - .:/go/src/Hackweek2020
+    ports:
+      - "8888:9966"
