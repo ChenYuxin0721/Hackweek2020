@@ -71,7 +71,7 @@
      
        {
       "message": "密码错误",
-      "status": 0
+      "code": 400
         }
         
         或
@@ -110,7 +110,7 @@
      
         {
          "message": "权限不足",
-         "status": 0
+         "code": 400
         }
 
 ## 4.发表故事
@@ -153,9 +153,9 @@
         "message": "内容不能为空"
         }
         
-## 5.查看我的故事
+## 5.删除某个故事
 
-- URL：/v1/api/create
+- URL：/v1/api/delete
 
 - method:POST
 
@@ -164,6 +164,21 @@
         "Content-Type": "application/json"
 
 - Request Body
+
+       {
+          "id":1,
+        }
+- Response Body
+
+        {
+        "code": 200,
+        "data": null,
+        "message": "删除成功"
+        }
+        
+        
+        
+       
 
         
     
