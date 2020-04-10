@@ -31,16 +31,18 @@ func Register(c *gin.Context) {
 		return
 	}
 	newUser:=model.User{
-		Model:     gorm.Model{},
-		Name:      name,
+        Model:     gorm.Model{},
+	    Name:      name,
 		Password:  string(hasedPassword),
 		Following: 0,
 		Follower:  0,
 		Like:      0,
 		StoryId:   0,
 		Currency:  0,
-	}
-	DB.Create(&newUser)
+
+     }
+
+    DB.Create(&newUser)
 
 	response.Success(c,nil,"注册成功")
 }
@@ -89,7 +91,7 @@ func Login(c *gin.Context) {
 			return
 		}
 		//返回结果
-		response.Success(c,gin.H{"token":token},"注册成功")
+		response.Success(c,gin.H{"token":token},"登录成功")
 }
 
 func Info(c *gin.Context)  {
@@ -104,41 +106,63 @@ func IndexHandler(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html",nil)
 }
 
+
+
 func CreateAStory(c *gin.Context) {
-	//得到请求
-	var story model.Story
-	c.BindJSON(&story)
-	//存入数据库
-	err:=util.CreateAStory(&story)
-	if err!= nil{
-		c.JSON(http.StatusOK, gin.H{
-			"error": err.Error()})
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"code":  200,
-			"message": "success",
-			"data":    story,
-		})
+	//获取参数
+	name := c.PostForm("name")
+	Text := c.PostForm("text")
+	Title := c.PostForm("title")
+	Tag := c.PostForm("tag")
+	Imagurl := c.PostForm("Imagurl")
+	//数据验证
+	if len(Text) == 0 {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"code": "422", "message": "内容不能为空"})
+		return
 	}
-}
+	if len(Title) == 0 {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"code": "422", "message": "内容不能为空"})
+		return
+	}
+	if len(Tag) == 0 {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"code": "422", "message": "内容不能为空"})
+		return
+	}
+
+		newStory := model.Story{
+			Model:   gorm.Model{},
+			Name:    name,
+			Title:   Title,
+			Text:    Text,
+			Tag:     Tag,
+			Imagurl: Imagurl,
+		}
+		db.DB.Create(&newStory)
+
+		response.Success(c,gin.H{
+			"id": newStory.ID,
+	    	"name":name,
+	    	"title":Title,
+	    	"text":Text,
+	    	"tag":Tag,
+	    	"imagurl":Imagurl,
+	    },
+	    " 发表成功")
+
+	}
+
 
 func ReadAllMyStory(c *gin.Context) {
 	//查询我的故事的所有数据
-	allstory, err:=util.ReadAllMyStory()
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"error": err.Error()})
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"code":  200,
-			"message": "success",
-			"data":    allstory,
-		})
-	}
+	name := c.PostForm("name")
+	var allstory []model.Story
+	db.DB.Where(&model.Story{Name: name}).First(&allstory)
+	db.DB.Table("Story").Where("name = ?", "name ").Find(&allstory)
+	response.Success(c,nil, "删除成功")
 }
 
 func UpdateAStory(c *gin.Context) {
-	id, ok := c.Params.Get("id")
+	id, ok := c.Params.Get("StoryId")
 	if !ok {
 		c.JSON(http.StatusOK, gin.H{"error": "invalid id"})
 		return
@@ -162,21 +186,11 @@ func UpdateAStory(c *gin.Context) {
 }
 
 func DeleteAStory(c *gin.Context) {
-	id, ok := c.Params.Get("id")
-	if !ok {
-		c.JSON(http.StatusOK, gin.H{
-			"error": "invalid id"})
-		return
-	}
-	if err := util.DeleteAStory(id); err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"error": err.Error(),
-		})
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"status":  2000,
-			"message": "deleted successfully",
-		})
-	}
+	DB:=db.GetDB()
+	id := c.PostForm("id")
+	story:=db.DB.Table("Story").Where("id = ?",id).First(&id)
+	DB.Delete(&story)
+	response.Success(c,nil,"删除成功")
+
 }
 

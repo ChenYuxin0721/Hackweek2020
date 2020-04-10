@@ -17,10 +17,14 @@ type User struct {
 	Currency  int64
 }
 
+
 type Story struct{
 	gorm.Model
-	Story string `json:"story"`
-	Image    []Img `gorm:"association_foreignkey:Img"`
+	Name string `json:"name"`
+	Title string `json:"title"`
+	Tag string `json:"tag"`
+	Text string `json:"text"`
+	Imagurl   string  `json:"imagurl"`
 }
 
 type Img struct {

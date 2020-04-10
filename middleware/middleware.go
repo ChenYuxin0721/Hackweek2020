@@ -16,7 +16,7 @@ func Middleware()gin.HandlerFunc  {
 		//validate token fomate
 		if tokenString == " " || !strings.HasPrefix(tokenString, "Bearer"){
 			c.JSON(http.StatusUnauthorized,gin.H{
-				"status":0,
+				"code":400,
 				"message":"权限不足"})
 			c.Abort()
 			return
@@ -39,7 +39,7 @@ func Middleware()gin.HandlerFunc  {
 		//用户不存在
 		if user.ID == 0{
 			c.JSON(http.StatusUnauthorized,gin.H{
-				"status":0,
+				"code":400,
 				"message":"权限不足"})
 			c.Abort()
 			return

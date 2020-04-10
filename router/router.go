@@ -8,30 +8,23 @@ import (
 
 func SetupRouter()*gin.Engine{
 	r := gin.Default()
-	r.Static("/static","static")
-	r.LoadHTMLGlob("templates/*")
-	r.GET("/", controller.IndexHandler)
 	//api
 	v1Group := r.Group("v1")
 	{
 		//注册
-		v1Group.POST("/register",controller.Register)
+		v1Group.POST("/api/register",controller.Register)
 		//登录
-		v1Group.POST("/login",controller.Login)
+		v1Group.POST("/api/login",controller.Login)
 		//存入信息
-		v1Group.GET("/info",middleware.Middleware(),controller.Info)
+		v1Group.GET("/api/info",middleware.Middleware(),controller.Info)
 		//发表故事
-		v1Group.POST("/post", controller.CreateAStory)
+		v1Group.POST("/api/create", controller.CreateAStory)
 		//查看我的所有的故事
-		v1Group.GET("/readme", controller.ReadAllMyStory)
-		//查看我的某个故事
-		v1Group.GET("/readme/:id", func(c *gin.Context) {
-
-		})
+		v1Group.GET("/api/readme", controller.ReadAllMyStory)
 		//修改我的某个故事
-		v1Group.PUT("/readme/:id", controller.UpdateAStory)
+		v1Group.PUT("/api/readme/:id", controller.UpdateAStory)
 		//删除我的某个故事
-		v1Group.DELETE("/readme/:id", controller.DeleteAStory)
+		v1Group.DELETE("/api/readme", controller.DeleteAStory)
 	}
 	return r
 }
