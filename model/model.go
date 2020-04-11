@@ -4,7 +4,6 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-
 type User struct {
 	gorm.Model
 	Name      string `jason:"name"`
@@ -17,14 +16,13 @@ type User struct {
 	Currency  int64
 }
 
-
-type Story struct{
+type Story struct {
 	gorm.Model
-	Name string `json:"name"`
-	Title string `json:"title"`
-	Tag string `json:"tag"`
-	Text string `json:"text"`
-	Imagurl   string  `json:"imagurl"`
+	Name    string `json:"name"`
+	Title   string `json:"title"`
+	Tag     string `json:"tag"`
+	Text    string `json:"text"`
+	Imagurl string `json:"imagurl"`
 }
 
 type Img struct {
@@ -33,10 +31,7 @@ type Img struct {
 }
 
 type Avatar struct {
-    gorm.Model
+	gorm.Model
 	AvaRefer uint
-	Url  string
+	Url      string
 }
-
-
-

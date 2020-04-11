@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func RandomString(n int)string {
+func RandomString(n int) string {
 	letters := []byte("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM123456789")
 	result := make([]byte, n)
 	rand.Seed(time.Now().Unix())
@@ -17,28 +17,26 @@ func RandomString(n int)string {
 	return string(result)
 }
 
-
-func ReadAllMyStory()(allstory []*model.Story,err error){
-	if err := db.DB.Find(&allstory).Error;err!=nil{
-		return  nil, err
+func ReadAllMyStory() (allstory []*model.Story, err error) {
+	if err := db.DB.Find(&allstory).Error; err != nil {
+		return nil, err
 	}
 	return
 }
 
-func GETAStory(id string)(story *model.Story,err error){
+func GETAStory(id string) (story *model.Story, err error) {
 	if err = db.DB.Where("id=?", id).First(new(model.Story)).Error; err != nil {
-		return nil,err
+		return nil, err
 	}
 	return
 }
 
-func UpdateAStory(story *model.Story)(err error){
-	err = db.DB.Save(story).Error;
+func UpdateAStory(story *model.Story) (err error) {
+	err = db.DB.Save(story).Error
 	return
 }
 
-
-func DeleteAStory(id string)(err error){
-	err = db.DB.Where("id=?",id).Delete(&model.Story{}).Error
+func DeleteAStory(id string) (err error) {
+	err = db.DB.Where("id=?", id).Delete(&model.Story{}).Error
 	return
 }

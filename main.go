@@ -13,9 +13,9 @@ import (
 
 func main() {
 	InitConfig()
-	db:=db.InitDB()
-	defer db.Close()//关闭数据库
-	r:=gin.Default()
+	db := db.InitDB()
+	defer db.Close() //关闭数据库
+	r := gin.Default()
 	// 告诉gin框架模板文件引用的静态文件去哪里找
 
 	r.Static("/static", "static")
@@ -29,23 +29,21 @@ func main() {
 		c.HTML(http.StatusOK, "index.html", nil)
 
 	})
-    r=router.SetupRouter()
-    port:=viper.GetString("server.port")
-    if port !=""{
-    	panic(r.Run(":"+port))
+	r = router.SetupRouter()
+	port := viper.GetString("server.port")
+	if port != "" {
+		panic(r.Run(":" + port))
 	}
 	panic(r.Run())
 }
 
-func InitConfig()  {
-	workDir,_:=os.Getwd()
+func InitConfig() {
+	workDir, _ := os.Getwd()
 	viper.SetConfigName("application")
 	viper.SetConfigType("yml")
-	viper.AddConfigPath(workDir+"/config")
-	err:=viper.ReadInConfig()
-	if err!=nil{
+	viper.AddConfigPath(workDir + "/config")
+	err := viper.ReadInConfig()
+	if err != nil {
 		panic(err)
 	}
 }
-
-
