@@ -1,6 +1,0 @@
-FROM golang:1.8
-
-
-RUN go mod download
-WORKDIR /go/src/Hackweek2020
-ENTRYPOINT ["go", "run", "main.go"]

@@ -8,4 +8,4 @@ services:
     volumes:
       - .:/go/src/Hackweek2020
     ports:
-      - "8888:9966"
+      - "8888:8080"

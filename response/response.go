@@ -16,3 +16,4 @@ func Success(c *gin.Context,data gin.H,message string)  {
 func Fail(c *gin.Context,data gin.H,message string)  {
 	Response(c,http.StatusOK,400,data,message)
 }
+

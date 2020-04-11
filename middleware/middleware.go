@@ -26,7 +26,7 @@ func Middleware()gin.HandlerFunc  {
 		token, claims,err:=db.ParseToken(tokenString)
 		if err!=nil || !token.Valid{
 			c.JSON(http.StatusUnauthorized,gin.H{
-				"status":0,
+				"code":400,
 				"message":"权限不足"})
 			c.Abort()
 			return
@@ -50,4 +50,22 @@ func Middleware()gin.HandlerFunc  {
 		c.Next()
 
 	}
+}
+
+
+func CrossOrigin() gin.HandlerFunc {
+
+	return func(c *gin.Context) {
+
+		allowHeaders := "Accept, Content-Type, Content-Length, Accept-Encoding, x-CSRF-Token, Authorization"
+		if origin := c.Request.Header.Get("Origin"); origin != ""{
+		c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
+		c.Writer.Header().Set("Vary", "Origin")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, PUT, PATCH, GET, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", allowHeaders)
+		}
+		c.Request.Header.Del("Origin")
+	}
+
 }

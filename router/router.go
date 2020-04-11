@@ -8,6 +8,8 @@ import (
 
 func SetupRouter()*gin.Engine{
 	r := gin.Default()
+
+	r.Use(middleware.CrossOrigin())
 	//api
 	v1Group := r.Group("v1")
 	{

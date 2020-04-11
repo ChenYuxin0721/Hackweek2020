@@ -15,19 +15,19 @@ import (
 
 func Register(c *gin.Context) {
 	DB := db.GetDB()
-	name:=c.PostForm("name")
-	password:=c.PostForm("password")
+	name := c.Query("name")
+	password := c.Query("password")
 	if len(name)==0{
 		name = util.RandomString(10)
 	}
 	if len(password)<6{
-		response.Response(c,http.StatusUnprocessableEntity,422,nil,"密码不能少于6位")
+		response.Response(c,http.StatusOK,400,nil,"密码不能少于6位")
 		return
 	}
 	//创建用户
 	hasedPassword, err := bcrypt.GenerateFromPassword([]byte(password),bcrypt.DefaultCost)
 	if err!=nil{
-		response.Response(c,http.StatusUnprocessableEntity,500,nil,"加密错误")
+		response.Response(c,http.StatusOK,400,nil,"加密错误")
 		return
 	}
 	newUser:=model.User{
@@ -50,34 +50,34 @@ func Register(c *gin.Context) {
 func Login(c *gin.Context) {
 	DB:=db.GetDB()
 	//获取参数
-	name := c.PostForm("name")
-	password := c.PostForm("password")
+	name := c.Query("name")
+	password := c.Query("password")
 	//数据验证
 	if len(name) == 0 {
-		c.JSON(http.StatusUnprocessableEntity, gin.H{
-			"code":    422,
+		c.JSON(http.StatusOK, gin.H{
+			"code":    400,
 			"message": "用户名不能为空"})
 		return
 	}
 	if len(password) < 6 {
-			c.JSON(http.StatusUnprocessableEntity, gin.H{
-				"code":  422,
+			c.JSON(http.StatusOK, gin.H{
+				"code":  400,
 				"message": "密码不能少于6位"})
 		return
 	}
 		//判断用户是否存在
 		var user model.User
 		DB.Where("name=?",name).First(&user)
-		if user.ID==0{
-			c.JSON(http.StatusUnprocessableEntity,gin.H{
-				"status":0,
+		if user.ID == 0 {
+			c.JSON(http.StatusOK,gin.H{
+				"code":400,
 				"message":"用户不存在"})
 			return
 		}
 		//判断密码是否正确
 		if err:= bcrypt.CompareHashAndPassword([]byte(user.Password),[]byte(password)); err != nil {
-			c.JSON(http.StatusBadRequest,gin.H{
-				"status":0,
+			c.JSON(http.StatusOK,gin.H{
+				"code":400,
 				"message":"密码错误"})
 			return
 		}
@@ -85,7 +85,7 @@ func Login(c *gin.Context) {
 		token,err :=db.ReleaseToken(user)
 		if err!=nil{
 			c.JSON(http.StatusInternalServerError,gin.H{
-				"status":0,
+				"code":400,
 				"message":"系统异常"})
 			log.Printf("token generate error: %v",err)
 			return
@@ -117,15 +117,15 @@ func CreateAStory(c *gin.Context) {
 	Imagurl := c.PostForm("Imagurl")
 	//数据验证
 	if len(Text) == 0 {
-		c.JSON(http.StatusUnprocessableEntity, gin.H{"code": "422", "message": "内容不能为空"})
+		c.JSON(http.StatusOK, gin.H{"code": "400", "message": "内容不能为空"})
 		return
 	}
 	if len(Title) == 0 {
-		c.JSON(http.StatusUnprocessableEntity, gin.H{"code": "422", "message": "内容不能为空"})
+		c.JSON(http.StatusOK, gin.H{"code": "400", "message": "内容不能为空"})
 		return
 	}
 	if len(Tag) == 0 {
-		c.JSON(http.StatusUnprocessableEntity, gin.H{"code": "422", "message": "内容不能为空"})
+		c.JSON(http.StatusOK, gin.H{"code": "400", "message": "内容不能为空"})
 		return
 	}
 
