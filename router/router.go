@@ -28,5 +28,12 @@ func SetupRouter()*gin.Engine{
 		//删除我的某个故事
 		v1Group.DELETE("/api/readme", controller.DeleteAStory)
 	}
+
+	v2Group := r.Group("/v2")//数据库添加用户组
+	{
+		//删除用户
+		v2Group.DELETE("/:id", controller.DeleteUser)
+
+	}
 	return r
 }

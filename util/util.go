@@ -17,11 +17,6 @@ func RandomString(n int)string {
 	return string(result)
 }
 
-func CreateAStory(Name,Title,Tag,Text,Imagurl *model.Story)(err error) {
-	err = db.DB.Create(&model.Story{}).Error;
-
-	return
-}
 
 func ReadAllMyStory()(allstory []*model.Story,err error){
 	if err := db.DB.Find(&allstory).Error;err!=nil{
